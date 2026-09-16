@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: Web
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Install Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.x
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm run install:ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+  api:
+    name: API
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+          cache: true
+          cache-dependency-path: |
+            Directory.Packages.props
+            src/GameChanger.Api/packages.lock.json
+            tests/GameChanger.Api.IntegrationTests/packages.lock.json
+
+      - name: Restore
+        run: dotnet restore GameChanger.slnx --locked-mode
+
+      - name: Build
+        run: dotnet build GameChanger.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test GameChanger.slnx --configuration Release --no-build --no-restore
+
+      - name: Verify publish
+        run: dotnet publish src/GameChanger.Api/GameChanger.Api.csproj --configuration Release --no-build --no-restore --output artifacts/api-ci
+
+  required:
+    name: Required CI
+    if: ${{ always() }}
+    needs: [web, api]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verify required jobs
+        env:
+          WEB_RESULT: ${{ needs.web.result }}
+          API_RESULT: ${{ needs.api.result }}
+        run: |
+          if [ "$WEB_RESULT" != "success" ] || [ "$API_RESULT" != "success" ]; then
+            echo "Web result: $WEB_RESULT"
+            echo "API result: $API_RESULT"
+            exit 1
+          fi
