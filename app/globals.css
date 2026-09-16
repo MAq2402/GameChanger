@@ -19,24 +19,24 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f2f5fb;
+  --foreground: #14213d;
   --card: #ffffff;
   --card-foreground: #171717;
   --popover: #ffffff;
   --popover-foreground: #171717;
-  --primary: #171717;
-  --primary-foreground: #fafafa;
-  --secondary: #f5f5f5;
-  --secondary-foreground: #171717;
-  --muted: #f5f5f5;
-  --muted-foreground: #737373;
-  --accent: #f5f5f5;
-  --accent-foreground: #171717;
-  --destructive: #e7000b;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
-  --ring: #a1a1a1;
+  --primary: #365cf5;
+  --primary-foreground: #ffffff;
+  --secondary: #edf1ff;
+  --secondary-foreground: #1f3478;
+  --muted: #eef1f7;
+  --muted-foreground: #64718c;
+  --accent: #fff0ec;
+  --accent-foreground: #8f321f;
+  --destructive: #c62d37;
+  --border: #dce2ee;
+  --input: #d6ddeb;
+  --ring: #365cf5;
   --chart-1: #f54900;
   --chart-2: #009689;
   --chart-3: #104e64;
@@ -96,21 +96,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --card: #171717;
-    --card-foreground: #ededed;
-    --popover: #171717;
-    --popover-foreground: #ededed;
-    --primary: #ededed;
-    --primary-foreground: #171717;
-    --secondary: #262626;
-    --secondary-foreground: #ededed;
-    --muted: #262626;
-    --muted-foreground: #a1a1a1;
-    --accent: #262626;
-    --accent-foreground: #ededed;
-    --destructive: #ff6467;
+    --background: #0b1020;
+    --foreground: #edf1ff;
+    --card: #111a31;
+    --card-foreground: #edf1ff;
+    --popover: #111a31;
+    --popover-foreground: #edf1ff;
+    --primary: #7891ff;
+    --primary-foreground: #091126;
+    --secondary: #1b294b;
+    --secondary-foreground: #dbe3ff;
+    --muted: #17213a;
+    --muted-foreground: #a7b2cb;
+    --accent: #3a211f;
+    --accent-foreground: #ffb4a4;
+    --destructive: #ff7078;
     --border: #ffffff1a;
     --input: #ffffff26;
     --ring: #737373;
@@ -133,5 +133,9 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background-image:
+    radial-gradient(circle at 8% 0%, rgb(54 92 245 / 13%), transparent 34rem),
+    radial-gradient(circle at 100% 100%, rgb(255 107 74 / 11%), transparent 30rem);
 }

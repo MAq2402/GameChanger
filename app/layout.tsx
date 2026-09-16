@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Starter Project",
-  description: "A clean starting point for building your site.",
-  other: {
-    "codex-preview": "development",
-  },
+  title: "GameChanger | Build your next cycle",
+  description: "Create focused improvement cycles and build a consistent weekly review rhythm.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

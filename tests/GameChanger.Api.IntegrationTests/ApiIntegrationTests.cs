@@ -17,7 +17,7 @@ public sealed class ApiIntegrationTests(SqlServerFixture sqlServer)
         using var client = factory.CreateClient();
 
         var cancellationToken = TestContext.Current.CancellationToken;
-        var response = await client.GetAsync("/api", cancellationToken);
+        var response = await client.GetAsync("/api/v1", cancellationToken);
         var content = await response.Content.ReadFromJsonAsync<ApiInformation>(cancellationToken);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
