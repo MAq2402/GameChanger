@@ -1,17 +1,7 @@
-name: API
+name: API deployment
 
 on:
   push:
-    branches: [main]
-    paths:
-      - "src/GameChanger.Api/**"
-      - "tests/GameChanger.Api.IntegrationTests/**"
-      - "Directory.Build.props"
-      - "Directory.Packages.props"
-      - "GameChanger.slnx"
-      - "global.json"
-      - ".github/workflows/api.yml"
-  pull_request:
     branches: [main]
     paths:
       - "src/GameChanger.Api/**"
@@ -71,7 +61,7 @@ jobs:
 
   deploy:
     name: Deploy to Azure App Service
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     concurrency:
